@@ -1,0 +1,132 @@
+{
+  "originHash" : "d88faadecd55f4ddcae0dc6b9f537c1e0d7a22f165ec3537ec5b469ad8fa739f",
+  "pins" : [
+    {
+      "identity" : "swift-affine-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-affine-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "8d4bdfb1ceac4d0b329c1fb77342207c70e116b2"
+      }
+    },
+    {
+      "identity" : "swift-bit-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-bit-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "3402fdcd5be6a10051484f6dfd18e03decd15cd4"
+      }
+    },
+    {
+      "identity" : "swift-byte-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-byte-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "94c7154946385ae24f0f8ed304f4b5666df0f9f7"
+      }
+    },
+    {
+      "identity" : "swift-cardinal-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-cardinal-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "335e064cf862c5d1df0dcc68e526e07ac1fdbad7"
+      }
+    },
+    {
+      "identity" : "swift-carrier-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-carrier-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "4f9fc570492a61bcfb8f4a9fef93cc3fa72ec30e"
+      }
+    },
+    {
+      "identity" : "swift-comparison-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-comparison-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b9c2175baa76580d318853da55d70fab416f6c53"
+      }
+    },
+    {
+      "identity" : "swift-equation-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-equation-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "fbb0550cad8f92aa3f887d216e61dd24e7ecf5ef"
+      }
+    },
+    {
+      "identity" : "swift-hash-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-hash-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "5af174d000a87bd8a93e904ccd186873d6eab2d6"
+      }
+    },
+    {
+      "identity" : "swift-index-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-index-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e62390a40d44585333740ddbb8a67b50ca52c475"
+      }
+    },
+    {
+      "identity" : "swift-memory-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-memory-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ba0c87a36ab7a62d348d8b06acdfec8892101d61"
+      }
+    },
+    {
+      "identity" : "swift-ordinal-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-ordinal-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0d33fe80f4c3b9ff90f44ea6dbf17a29a3bc747b"
+      }
+    },
+    {
+      "identity" : "swift-ownership-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-ownership-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1012f20945e395fa0d1745d5f96627a3bebed947"
+      }
+    },
+    {
+      "identity" : "swift-property-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-property-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "354787ff0a3cc1d35ab3f0d5611fbcef1e825413"
+      }
+    },
+    {
+      "identity" : "swift-tagged-primitives",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-primitives/swift-tagged-primitives.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "fa1919758ee7eb3e0b2011fee9ee6636111a4955"
+      }
+    }
+  ],
+  "version" : 3
+}
