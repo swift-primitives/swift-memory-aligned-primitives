@@ -23,7 +23,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swift-primitives/swift-memory-primitives.git", branch: "main"),
-        .package(path: "../swift-span-primitives"),
+        .package(url: "https://github.com/swift-primitives/swift-span-primitives.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-growth-primitives.git", branch: "main"),
         .package(url: "https://github.com/swift-primitives/swift-byte-primitives.git", branch: "main"),
         .package(url: "https://github.com/swift-primitives/swift-index-primitives.git", branch: "main"),
         .package(url: "https://github.com/swift-primitives/swift-affine-primitives.git", branch: "main"),
@@ -38,6 +39,7 @@ let package = Package(
                 .product(name: "Memory Alignment Primitives", package: "swift-memory-primitives"),
                 .product(name: "Memory Primitives Standard Library Integration", package: "swift-memory-primitives"),
                 .product(name: "Span Protocol Primitives", package: "swift-span-primitives"),
+                .product(name: "Growth Primitives", package: "swift-growth-primitives"),
                 .product(name: "Index Primitives", package: "swift-index-primitives"),
                 .product(name: "Affine Primitives", package: "swift-affine-primitives"),
                 .product(name: "Ordinal Primitives", package: "swift-ordinal-primitives"),

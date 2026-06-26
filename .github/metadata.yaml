@@ -1,0 +1,9 @@
+# .github/metadata.yaml
+description: "Move-only, alignment-guaranteed, growable owned byte region (Memory.Aligned) for direct I/O and SIMD."
+topics:
+  - primitives
+  - memory
+  - alignment
+homepage: "https://swift-institute.org"
+readme:
+  family: E

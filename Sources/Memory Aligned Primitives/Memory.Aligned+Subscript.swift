@@ -1,6 +1,3 @@
-public import Index_Primitives
-import Ordinal_Primitives_Standard_Library_Integration
-import Affine_Primitives_Standard_Library_Integration
 // ===----------------------------------------------------------------------===//
 //
 // This source file is part of the swift-primitives open source project
@@ -11,6 +8,10 @@ import Affine_Primitives_Standard_Library_Integration
 // See LICENSE for license information
 //
 // ===----------------------------------------------------------------------===//
+
+import Affine_Primitives_Standard_Library_Integration
+public import Index_Primitives
+import Ordinal_Primitives_Standard_Library_Integration
 
 // MARK: - Range Subscripts (Read-Only)
 
@@ -80,4 +81,5 @@ extension Memory.Aligned {
 //         // work with subBuffer
 //     }
 //
-// This API is provided by Memory.Contiguous+RangeAccess.swift.
+// The read-only range subscripts are provided in the "Range Subscripts
+// (Read-Only)" section of this file.

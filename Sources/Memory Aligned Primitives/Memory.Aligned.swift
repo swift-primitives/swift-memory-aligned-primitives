@@ -1,5 +1,3 @@
-import Ordinal_Primitives_Standard_Library_Integration
-import Affine_Primitives_Standard_Library_Integration
 // ===----------------------------------------------------------------------===//
 //
 // This source file is part of the swift-primitives open source project
@@ -11,21 +9,28 @@ import Affine_Primitives_Standard_Library_Integration
 //
 // ===----------------------------------------------------------------------===//
 
+import Affine_Primitives_Standard_Library_Integration
 public import Byte_Primitives
-public import Memory_Alignment_Primitives
-public import Span_Protocol_Primitives
+public import Growth_Primitives
 public import Index_Primitives
+public import Memory_Alignment_Primitives
+import Ordinal_Primitives_Standard_Library_Integration
+public import Span_Protocol_Primitives
 
 extension Memory {
-    /// A fixed-size, aligned memory buffer with unique ownership.
+    /// A growable, aligned memory **region** with unique ownership.
     ///
     /// `Memory.Aligned` provides guaranteed memory alignment for performance-critical
     /// operations like direct I/O, SIMD processing, and memory-mapped files.
     ///
     /// ## Design Constraints
     ///
-    /// This type is intentionally **fixed-size**. It does not support:
-    /// - Resizing or growth (use `Memory.Unbounded` for growable storage)
+    /// `Memory.Aligned` is a **single-buffer**, alignment-constrained, out-of-line
+    /// byte region — *not* a vending allocator (it owns one region for its owner; it
+    /// does not sub-vend allocations the way `Memory.Arena` / `Memory.Pool` do). It is
+    /// **growable in place** (it conforms ``Growth/Growable`` and carries a
+    /// ``Growth/Policy`` — growth is a leaf capability per the placement calculus
+    /// §5.3), but it does not support:
     /// - Reader/writer indices (use `Binary.Cursor` for positioned access)
     /// - Copy-on-write semantics (move-only ownership guarantees exclusivity)
     ///
@@ -36,7 +41,7 @@ extension Memory {
     /// - No accidental copies of large allocations
     /// - Safe to send across concurrency domains (`Sendable`)
     ///
-    /// Memory is deallocated when the buffer goes out of scope.
+    /// Memory is deallocated when the region goes out of scope.
     ///
     /// ## Allocation
     ///
@@ -65,21 +70,32 @@ extension Memory {
     ///
     /// ## Usage
     ///
-    /// For most APIs, accept `some Memory.Contiguous.Protocol`
+    /// For most APIs, accept `some Span.`Protocol``
     /// rather than `Memory.Aligned` directly. This keeps `Memory.Aligned` as
     /// an implementation detail, not a type that "infects" public interfaces.
     @safe
     public struct Aligned: ~Copyable, @unsafe @unchecked Sendable {
         /// Typed byte pointer to the allocated memory.
+        ///
         /// Memory is bound to UInt8 at initialization.
         @usableFromInline
         var bytePointer: UnsafeMutablePointer<Byte>
 
-        /// The number of bytes allocated.
-        public let count: Index<Byte>.Count
+        /// The number of addressable bytes in the region.
+        ///
+        /// Grows when the region is reallocated to a larger capacity
+        /// (``ensureCapacity(minimum:)`` / ``reserveDiscardingContents(minimum:)``).
+        public internal(set) var count: Index<Byte>.Count
 
-        /// The alignment of the allocation.
+        /// The alignment of the allocation (preserved across reallocations).
         public let alignment: Memory.Alignment
+
+        /// The growth strategy applied when the region is reallocated to a larger capacity.
+        ///
+        /// Carried by the leaf per the placement calculus (§5.3): a growable leaf
+        /// *conforms* ``Growth/Growable`` (it can grow) and *holds* a ``Growth/Policy``
+        /// (it knows how fast) — orthogonal axes.
+        public let growthPolicy: Growth.Policy<Byte>
 
         deinit {
             unsafe bytePointer.deallocate()
@@ -96,12 +112,17 @@ extension Memory.Aligned {
     ///   - byteCount: The number of bytes to allocate.
     ///   - alignment: The alignment boundary. `Memory.Alignment` guarantees
     ///     this is a valid power of 2.
+    ///   - growthPolicy: The strategy applied when the region is reallocated to a larger capacity. Defaults to `.doubling`.
     /// - Throws: `Error.allocationFailed` if allocation fails.
     ///
     /// - Note: Empty buffers (`byteCount == 0`) allocate 1 byte with the
     ///   requested alignment. This avoids sentinel pointers and platform-specific
     ///   page size queries.
-    public init(byteCount: Index<Byte>.Count, alignment: Memory.Alignment) throws(Self.Error) {
+    public init(
+        byteCount: Index<Byte>.Count,
+        alignment: Memory.Alignment,
+        growthPolicy: Growth.Policy<Byte> = .doubling
+    ) throws(Self.Error) {
         let alignmentMagnitude: Int = alignment.magnitude()
 
         if byteCount == .zero {
@@ -112,6 +133,7 @@ extension Memory.Aligned {
             unsafe self.bytePointer = raw.bindMemory(to: Byte.self, capacity: 1)
             self.count = .zero
             self.alignment = alignment
+            self.growthPolicy = growthPolicy
             return
         }
 
@@ -126,6 +148,7 @@ extension Memory.Aligned {
 
         self.count = byteCount
         self.alignment = alignment
+        self.growthPolicy = growthPolicy
     }
 
     /// Creates an aligned buffer initialized with zeros.
@@ -133,12 +156,15 @@ extension Memory.Aligned {
     /// - Parameters:
     ///   - byteCount: The number of bytes to allocate.
     ///   - alignment: The alignment boundary.
+    ///   - growthPolicy: The strategy applied when the region is reallocated to a larger capacity. Defaults to `.doubling`.
+    /// - Returns: A newly allocated aligned region whose bytes are all zero.
     /// - Throws: `Error.allocationFailed` if allocation fails.
     public static func zeroed(
         byteCount: Index<Byte>.Count,
-        alignment: Memory.Alignment
+        alignment: Memory.Alignment,
+        growthPolicy: Growth.Policy<Byte> = .doubling
     ) throws(Self.Error) -> Self {
-        let buffer = try Self(byteCount: byteCount, alignment: alignment)
+        let buffer = try Self(byteCount: byteCount, alignment: alignment, growthPolicy: growthPolicy)
         unsafe buffer.bytePointer.initialize(repeating: Byte(0), count: Int(bitPattern: byteCount))
         return buffer
     }

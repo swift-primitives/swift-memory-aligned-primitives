@@ -1,6 +1,3 @@
-public import Index_Primitives
-import Ordinal_Primitives_Standard_Library_Integration
-import Affine_Primitives_Standard_Library_Integration
 // ===----------------------------------------------------------------------===//
 //
 // This source file is part of the swift-primitives open source project
@@ -11,6 +8,10 @@ import Affine_Primitives_Standard_Library_Integration
 // See LICENSE for license information
 //
 // ===----------------------------------------------------------------------===//
+
+import Affine_Primitives_Standard_Library_Integration
+public import Index_Primitives
+import Ordinal_Primitives_Standard_Library_Integration
 
 // MARK: - Single Byte Access
 
@@ -56,8 +57,10 @@ extension Memory.Aligned {
         precondition(offset >= 0 && offset + source.count <= Int(bitPattern: count))
         unsafe withUnsafeMutableBufferPointer { dest in
             unsafe source.withUnsafeBufferPointer { src in
-                unsafe dest.baseAddress!.advanced(by: offset)
-                    .update(from: src.baseAddress!, count: src.count)
+                guard let destBase = unsafe dest.baseAddress else { return }
+                guard let srcBase = unsafe src.baseAddress else { return }
+                unsafe destBase.advanced(by: offset)
+                    .update(from: srcBase, count: src.count)
             }
         }
     }
@@ -77,8 +80,10 @@ extension Memory.Aligned {
     ) {
         precondition(offset >= 0 && offset + source.count <= Int(bitPattern: count))
         unsafe withUnsafeMutableBytes { dest in
-            unsafe dest.baseAddress!.advanced(by: offset)
-                .copyMemory(from: source.baseAddress!, byteCount: source.count)
+            guard let destBase = unsafe dest.baseAddress else { return }
+            guard let srcBase = unsafe source.baseAddress else { return }
+            unsafe destBase.advanced(by: offset)
+                .copyMemory(from: srcBase, byteCount: source.count)
         }
     }
 }
@@ -104,7 +109,8 @@ extension Memory.Aligned {
     public mutating func zero(range: Swift.Range<Int>) {
         precondition(range.lowerBound >= 0 && range.upperBound <= Int(bitPattern: count))
         unsafe withUnsafeMutableBytes { buffer in
-            let start = unsafe buffer.baseAddress!.advanced(by: range.lowerBound)
+            guard let base = unsafe buffer.baseAddress else { return }
+            let start = unsafe base.advanced(by: range.lowerBound)
             unsafe start.initializeMemory(as: Byte.self, repeating: Byte(0), count: range.count)
         }
     }
