@@ -15,8 +15,13 @@ import Testing
 
 // Growth behavior folded onto Memory.Aligned (Cleave-8 item A — Memory.Unbounded dissolved).
 @Suite("Memory.Aligned Growth Tests")
-struct MemoryAlignedGrowthTests {
+struct `Memory.Aligned Growth Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+}
 
+extension `Memory.Aligned Growth Tests`.Unit {
     @Test
     func `creates with initial capacity and grows on demand`() throws {
         var region = try Memory.Aligned(byteCount: 8, alignment: try Memory.Alignment(8))

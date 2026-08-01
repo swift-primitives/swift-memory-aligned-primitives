@@ -14,8 +14,13 @@ import Memory_Aligned_Primitives_Test_Support
 import Testing
 
 @Suite("Memory.Aligned Tests")
-struct MemoryAlignedTests {
+struct `Memory.Aligned Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+}
 
+extension `Memory.Aligned Tests`.Unit {
     @Test
     func `allocates with requested alignment and count`() throws {
         let alignment = try Memory.Alignment(64)
