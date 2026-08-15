@@ -164,7 +164,11 @@ extension Memory.Aligned {
         alignment: Memory.Alignment,
         growthPolicy: Growth.Policy<Byte> = .doubling
     ) throws(Self.Error) -> Self {
-        let buffer = try Self(byteCount: byteCount, alignment: alignment, growthPolicy: growthPolicy)
+        let buffer = try Self(
+            byteCount: byteCount,
+            alignment: alignment,
+            growthPolicy: growthPolicy
+        )
         unsafe buffer.bytePointer.initialize(repeating: Byte(0), count: Int(bitPattern: byteCount))
         return buffer
     }
@@ -200,7 +204,9 @@ extension Memory.Aligned {
     public mutating func withUnsafeMutableBytes<R, E: Swift.Error>(
         _ body: (UnsafeMutableRawBufferPointer) throws(E) -> R
     ) throws(E) -> R {
-        try unsafe body(UnsafeMutableRawBufferPointer(start: UnsafeMutableRawPointer(bytePointer), count: count))
+        try unsafe body(
+            UnsafeMutableRawBufferPointer(start: UnsafeMutableRawPointer(bytePointer), count: count)
+        )
     }
 }
 
@@ -278,7 +284,10 @@ extension Memory.Aligned {
     public mutating func withMutableRawSpan<R, E: Swift.Error>(
         _ body: (inout MutableRawSpan) throws(E) -> R
     ) throws(E) -> R {
-        var span = unsafe MutableRawSpan(_unsafeStart: UnsafeMutableRawPointer(bytePointer), byteCount: count)
+        var span = unsafe MutableRawSpan(
+            _unsafeStart: UnsafeMutableRawPointer(bytePointer),
+            byteCount: count
+        )
         return try body(&span)
     }
 }

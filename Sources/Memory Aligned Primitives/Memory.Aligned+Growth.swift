@@ -42,11 +42,12 @@ extension Memory.Aligned {
         guard minimum > count else { return }
 
         try reallocate(
-            to: Index<Byte>.Count.max(growthPolicy.newCapacity(from: count), minimum),
+            to: Index<Byte>.Count.max(growthPolicy.capacity(from: count), minimum),
             preserving: true
         )
     }
 
+    // swift-format-ignore: AlwaysUseLowerCamelCase
     /// Ensures the region has at least the specified capacity without bounds checking.
     ///
     /// - Parameters:
@@ -62,7 +63,7 @@ extension Memory.Aligned {
 
         do {
             try reallocate(
-                to: Index<Byte>.Count.max(growthPolicy.newCapacity(from: count), minimum),
+                to: Index<Byte>.Count.max(growthPolicy.capacity(from: count), minimum),
                 preserving: true
             )
         } catch {
@@ -85,7 +86,7 @@ extension Memory.Aligned {
         guard minimum > count else { return }
 
         try reallocate(
-            to: Index<Byte>.Count.max(growthPolicy.newCapacity(from: count), minimum),
+            to: Index<Byte>.Count.max(growthPolicy.capacity(from: count), minimum),
             preserving: false
         )
     }
@@ -107,7 +108,9 @@ extension Memory.Aligned {
         )
 
         if preserving {
-            let bytesToCopy = Int(bitPattern: Index<Byte>.Count.min(count, newCapacity).underlying.rawValue)
+            let bytesToCopy = Int(
+                bitPattern: Index<Byte>.Count.min(count, newCapacity).underlying.rawValue
+            )
             unsafe newRegion.withUnsafeMutableBytes { dest in
                 unsafe withUnsafeBytes { src in
                     unsafe dest.copyMemory(

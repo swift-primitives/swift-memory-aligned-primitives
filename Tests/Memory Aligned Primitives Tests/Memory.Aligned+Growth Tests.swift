@@ -14,7 +14,7 @@ import Memory_Aligned_Primitives_Test_Support
 import Testing
 
 // Growth behavior folded onto Memory.Aligned (Cleave-8 item A — Memory.Unbounded dissolved).
-@Suite("Memory.Aligned Growth Tests")
+@Suite
 struct `Memory.Aligned Growth Tests` {
     @Suite struct Unit {}
     @Suite struct `Edge Case` {}

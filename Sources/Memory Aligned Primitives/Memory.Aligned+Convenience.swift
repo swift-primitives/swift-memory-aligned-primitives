@@ -95,7 +95,11 @@ extension Memory.Aligned {
     @inlinable
     public mutating func zero() {
         unsafe withUnsafeMutableBytes { buffer in
-            _ = unsafe buffer.baseAddress?.initializeMemory(as: Byte.self, repeating: Byte(0), count: buffer.count)
+            _ = unsafe buffer.baseAddress?.initializeMemory(
+                as: Byte.self,
+                repeating: Byte(0),
+                count: buffer.count
+            )
         }
     }
 
