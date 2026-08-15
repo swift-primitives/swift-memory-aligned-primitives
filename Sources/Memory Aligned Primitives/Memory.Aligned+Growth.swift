@@ -47,13 +47,13 @@ extension Memory.Aligned {
         )
     }
 
+    // swift-format-ignore: AlwaysUseLowerCamelCase
     /// Ensures the region has at least the specified capacity without bounds checking.
     ///
     /// - Parameters:
     ///   - __unchecked: Marker parameter.
     ///   - minimum: The minimum required capacity.
     /// - Precondition: Reallocation must succeed.
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     @inlinable
     public mutating func ensureCapacity(
         __unchecked: Void = (),
