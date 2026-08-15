@@ -53,6 +53,7 @@ extension Memory.Aligned {
     ///   - __unchecked: Marker parameter.
     ///   - minimum: The minimum required capacity.
     /// - Precondition: Reallocation must succeed.
+    // swift-format-ignore: AlwaysUseLowerCamelCase
     @inlinable
     public mutating func ensureCapacity(
         __unchecked: Void = (),
@@ -107,7 +108,9 @@ extension Memory.Aligned {
         )
 
         if preserving {
-            let bytesToCopy = Int(bitPattern: Index<Byte>.Count.min(count, newCapacity).underlying.rawValue)
+            let bytesToCopy = Int(
+                bitPattern: Index<Byte>.Count.min(count, newCapacity).underlying.rawValue
+            )
             unsafe newRegion.withUnsafeMutableBytes { dest in
                 unsafe withUnsafeBytes { src in
                     unsafe dest.copyMemory(
