@@ -42,7 +42,7 @@ extension Memory.Aligned {
         guard minimum > count else { return }
 
         try reallocate(
-            to: Index<Byte>.Count.max(growthPolicy.newCapacity(from: count), minimum),
+            to: Index<Byte>.Count.max(growthPolicy.capacity(from: count), minimum),
             preserving: true
         )
     }
@@ -62,7 +62,7 @@ extension Memory.Aligned {
 
         do {
             try reallocate(
-                to: Index<Byte>.Count.max(growthPolicy.newCapacity(from: count), minimum),
+                to: Index<Byte>.Count.max(growthPolicy.capacity(from: count), minimum),
                 preserving: true
             )
         } catch {
@@ -85,7 +85,7 @@ extension Memory.Aligned {
         guard minimum > count else { return }
 
         try reallocate(
-            to: Index<Byte>.Count.max(growthPolicy.newCapacity(from: count), minimum),
+            to: Index<Byte>.Count.max(growthPolicy.capacity(from: count), minimum),
             preserving: false
         )
     }

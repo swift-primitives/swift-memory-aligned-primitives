@@ -13,7 +13,7 @@ import Index_Primitives
 import Memory_Aligned_Primitives_Test_Support
 import Testing
 
-@Suite("Memory.Aligned Tests")
+@Suite
 struct `Memory.Aligned Tests` {
     @Suite struct Unit {}
     @Suite struct `Edge Case` {}
