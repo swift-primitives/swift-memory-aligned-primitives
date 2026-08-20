@@ -56,9 +56,9 @@ extension Memory.Aligned {
     ) {
         precondition(offset >= 0 && offset + source.count <= Int(bitPattern: count))
         unsafe withUnsafeMutableBufferPointer { dest in
-            unsafe source.withUnsafeBufferPointer { src in
-                guard let destBase = unsafe dest.baseAddress else { return }
-                guard let srcBase = unsafe src.baseAddress else { return }
+            source.withUnsafeBufferPointer { src in
+                guard let destBase = dest.baseAddress else { return }
+                guard let srcBase = src.baseAddress else { return }
                 unsafe destBase.advanced(by: offset)
                     .update(from: srcBase, count: src.count)
             }
@@ -80,8 +80,8 @@ extension Memory.Aligned {
     ) {
         precondition(offset >= 0 && offset + source.count <= Int(bitPattern: count))
         unsafe withUnsafeMutableBytes { dest in
-            guard let destBase = unsafe dest.baseAddress else { return }
-            guard let srcBase = unsafe source.baseAddress else { return }
+            guard let destBase = dest.baseAddress else { return }
+            guard let srcBase = source.baseAddress else { return }
             unsafe destBase.advanced(by: offset)
                 .copyMemory(from: srcBase, byteCount: source.count)
         }
@@ -113,7 +113,7 @@ extension Memory.Aligned {
     public mutating func zero(range: Swift.Range<Int>) {
         precondition(range.lowerBound >= 0 && range.upperBound <= Int(bitPattern: count))
         unsafe withUnsafeMutableBytes { buffer in
-            guard let base = unsafe buffer.baseAddress else { return }
+            guard let base = buffer.baseAddress else { return }
             let start = unsafe base.advanced(by: range.lowerBound)
             unsafe start.initializeMemory(as: Byte.self, repeating: Byte(0), count: range.count)
         }
