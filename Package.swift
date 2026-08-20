@@ -1,15 +1,15 @@
-// swift-tools-version: 6.3.3
+// swift-tools-version: 6.4
 
 import PackageDescription
 
 let package = Package(
     name: "swift-memory-aligned-primitives",
     platforms: [
-        .macOS("27"),
-        .iOS("27"),
-        .tvOS("27"),
-        .watchOS("27"),
-        .visionOS("27"),
+        .macOS(.v27),
+        .iOS(.v27),
+        .tvOS(.v27),
+        .watchOS(.v27),
+        .visionOS(.v27),
     ],
     products: [
         .library(
@@ -22,13 +22,34 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-primitives/swift-memory-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-span-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-growth-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-byte-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-index-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-affine-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-ordinal-primitives.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-primitives/swift-memory-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-span-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-growth-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-byte-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-index-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-affine-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-ordinal-primitives.git",
+            branch: "main"
+        ),
     ],
     targets: [
         .target(
@@ -37,7 +58,10 @@ let package = Package(
                 .product(name: "Byte Primitives", package: "swift-byte-primitives"),
                 .product(name: "Memory Address Primitives", package: "swift-memory-primitives"),
                 .product(name: "Memory Alignment Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Primitives Standard Library Integration", package: "swift-memory-primitives"),
+                .product(
+                    name: "Memory Primitives Standard Library Integration",
+                    package: "swift-memory-primitives"
+                ),
                 .product(name: "Span Protocol Primitives", package: "swift-span-primitives"),
                 .product(name: "Growth Primitives", package: "swift-growth-primitives"),
                 .product(name: "Index Primitives", package: "swift-index-primitives"),
@@ -49,7 +73,10 @@ let package = Package(
             name: "Memory Aligned Primitives Test Support",
             dependencies: [
                 "Memory Aligned Primitives",
-                .product(name: "Memory Primitives Test Support", package: "swift-memory-primitives"),
+                .product(
+                    name: "Memory Primitives Test Support",
+                    package: "swift-memory-primitives"
+                ),
             ],
             path: "Tests/Support"
         ),
@@ -79,7 +106,7 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
     ]
 
     let package: [SwiftSetting] = [
-        .enableExperimentalFeature("RawLayout"),
+        .enableExperimentalFeature("RawLayout")
     ]
 
     target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
