@@ -1,19 +1,7 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-primitives open source project
-//
-// Copyright (c) 2024-2026 Coen ten Thije Boonkkamp and the swift-primitives project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Index_Primitives
 import Memory_Aligned_Primitives_Test_Support
 import Testing
 
-// Growth behavior folded onto Memory.Aligned (Cleave-8 item A — Memory.Unbounded dissolved).
 @Suite
 struct `Memory.Aligned Growth Tests` {
     @Suite struct Unit {}
